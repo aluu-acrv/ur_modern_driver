@@ -7,6 +7,12 @@
   <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
   <arg name="robot_ip"/>
+  <!-- AL: robot_name: name of the robot defined in SRDF file -->
+  <arg name="robot_name"/>
+
+  <!-- AL: user name: name of the computer user. on ubuntu is the name in the relative path "/home/<USERNAME>/designrobotics..." -->
+  <arg name="user"/>
+
   <arg name="limited" default="false"/>
   <arg name="min_payload"  default="0.0"/>
   <arg name="max_payload"  default="3.0"/>
@@ -15,9 +21,14 @@
   <arg name="base_frame" default="$(arg prefix)base" />
   <arg name="tool_frame" default="$(arg prefix)tool0_controller" />
   <!-- robot model -->
-  <include file="$(find mod_ur10_description)/launch/mod_ur10_upload.launch">
+
+  <include file="/home/$(arg user)/designrobotics/design_robotics/src/$(arg robot_name)_description/launch/$(arg robot_name)_upload.launch">
     <arg name="limited" value="$(arg limited)"/>
   </include>
+
+  <!-- <include file="$(find ur_description)/launch/ur10_upload.launch">
+    <arg name="limited" value="$(arg limited)"/>
+  </include> -->
 
 
   <!-- Load hardware interface -->
@@ -34,7 +45,7 @@
   </node>
 
   <!-- Load controller settings -->
-  <rosparam file="$(find ur_modern_driver)/config/mod_ur10_controllers.yaml" command="load"/>
+  <rosparam file="$(find ur_modern_driver)/config/ur10_controllers.yaml" command="load"/>
 
   <!-- spawn controller manager -->
   <node name="ros_control_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"

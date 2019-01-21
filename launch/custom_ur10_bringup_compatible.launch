@@ -9,13 +9,22 @@
 <launch>
   
   <!-- robot_ip: IP-address of the robot's socket-messaging server -->
-  <arg name="robot_ip"/>
+  <arg name="robot_ip"/>  
+  
+  <!-- AL: robot_name: name of the robot defined in SRDF file -->
+  <arg name="robot_name"/>
+  <!-- <arg name="robot_name" default="ur10"/> -->
+
+  <!-- AL: user name: name of the computer user. on ubuntu is the name in the relative path "/home/<USERNAME>/designrobotics..." -->
+  <arg name="user"/>
+  
   <arg name="limited" default="false"/>
   <arg name="min_payload"  default="0.0"/>
   <arg name="max_payload"  default="10.0"/>
-  <arg name="prefix" default="" />
+
   <!-- robot model -->
-  <include file="$(find mod_ur10_description)/launch/mod_ur10_upload.launch">
+  <!-- <include file="$(find ur_description)/launch/ur10_upload.launch"> -->
+  <include file="/home/$(arg user)/designrobotics/design_robotics/src/$(arg robot_name)_description/launch/$(arg robot_name)_upload.launch">
     <arg name="limited" value="$(arg limited)"/>
   </include>
   
@@ -24,6 +33,7 @@
     <arg name="robot_ip" value="$(arg robot_ip)"/>
     <arg name="min_payload"  value="$(arg min_payload)"/>
     <arg name="max_payload"  value="$(arg max_payload)"/>
+    <arg name="servoj_time"  value="0.08" />
   </include>
 
 </launch>

@@ -1,0 +1,52 @@
+<?xml version="2.0"?>
+<!--
+  Universal robot ur10 launch.  Loads ur10 robot description (see ur_common.launch
+  for more info)
+
+  Usage:
+    ur10_bringup.launch robot_ip:=<value>
+
+  A.Luu modification: (21/01/19)
+    ur10_bringup.launch robot_ip:=<value> robot_name:=<value> user:=<value>
+      options: ur10, mod_ur10, ftdrill_ur10, full_robotiq
+    example: 
+      ur10_bringup.launch robot_ip:= 192.168.0.1 robot_name:=ftdrill_ur10 user:=mia
+-->
+
+<launch>
+  <!-- robot_ip: IP-address of the robot's socket-messaging server -->
+  <arg name="robot_ip"/> 
+
+  <!-- AL: robot_name: name of the robot defined in SRDF file -->
+  <arg name="robot_name"/>
+  <!-- <arg name="robot_name" default="ur10"/> -->
+
+  <!-- AL: user name: name of the computer user. on ubuntu is the name in the relative path "/home/<USERNAME>/designrobotics..." -->
+  <arg name="user"/>
+
+  <arg name="limited" default="false"/>
+  <arg name="min_payload"  default="0.0"/>
+  <arg name="max_payload"  default="10.0"/>
+  <arg name="prefix" default="" />
+  
+  <!-- <group if="$(arg robot_name)">
+    <remap from="ur10" to="$(arg robot_name)"/>
+  </group> -->
+    
+  <!-- robot model -->
+  <include file="/home/$(arg user)/designrobotics/design_robotics/src/$(arg robot_name)_description/launch/$(arg robot_name)_upload.launch">
+    <arg name="limited" value="$(arg limited)"/>
+  </include>
+  
+  <!-- <include file="$(find ur_description)/launch/ur10_upload.launch">
+    <arg name="limited" value="$(arg limited)"/>
+  </include> -->
+  
+  <!-- ur common -->
+  <include file="$(find ur_modern_driver)/launch/ur_common.launch">
+    <arg name="robot_ip" value="$(arg robot_ip)"/>
+    <arg name="min_payload"  value="$(arg min_payload)"/>
+    <arg name="max_payload"  value="$(arg max_payload)"/>
+  </include>
+
+</launch>
