@@ -34,7 +34,7 @@
   </group> -->
     
   <!-- robot model -->
-  <include file="/home/$(arg user)/designrobotics/design_robotics/src/$(arg robot_name)_description/launch/$(arg robot_name)_upload.launch">
+  <include file="/home/$(arg user)/designrobotics/design_robotics/src/desrob_ur10_configurations/$(arg robot_name)_description/launch/$(arg robot_name)_upload.launch">
     <arg name="limited" value="$(arg limited)"/>
   </include>
   
