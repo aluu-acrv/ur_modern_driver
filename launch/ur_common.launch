@@ -12,7 +12,8 @@
   <arg name="min_payload" />
   <arg name="max_payload" />
   <arg name="prefix" default="" />
-  <arg name="use_ros_control" default="false"/>
+  <arg name="use_ros_control" default="true"/>
+  <!-- <arg name="use_ros_control" default="false"/> -->
   <arg name="use_lowbandwidth_trajectory_follower" default="false"/>
   <arg name="time_interval" default="0.008"/>
   <arg name="servoj_time" default="0.008" />
