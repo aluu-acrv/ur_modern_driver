@@ -9,20 +9,21 @@
   <arg name="robot_ip"/>
   <arg name="limited" default="false"/>
   <arg name="min_payload"  default="0.0"/>
-  <arg name="max_payload"  default="3.0"/>
+  <arg name="max_payload"  default="10.0"/>
   <arg name="prefix" default="" />  
   <arg name="max_velocity" default="10.0"/> <!-- [rad/s] -->
   <arg name="base_frame" default="$(arg prefix)base" />
   <arg name="tool_frame" default="$(arg prefix)tool0_controller" />
   <arg name="shutdown_on_disconnect" default="true" />
+
   <!-- robot model -->
-  <include file="$(find ur_description)/launch/ur10_upload.launch">
+  <!-- <include file="$(find ur_description)/launch/ur10_upload.launch">
     <arg name="limited" value="$(arg limited)"/>
-  </include>
+  </include> -->
 
 
   <!-- Load hardware interface -->
-  <node name="ur_hardware_interface" pkg="ur_modern_driver" type="ur_driver" output="log" launch-prefix="$(arg launch_prefix)">
+  <!-- <node name="ur_hardware_interface" pkg="ur_modern_driver" type="ur_driver" output="log" launch-prefix="$(arg launch_prefix)">
     <param name="robot_ip_address" type="str" value="$(arg robot_ip)"/>
     <param name="min_payload" type="double" value="$(arg min_payload)"/>
     <param name="max_payload" type="double" value="$(arg max_payload)"/>
@@ -33,7 +34,7 @@
     <param name="base_frame" type="str" value="$(arg base_frame)"/>
     <param name="tool_frame" type="str" value="$(arg tool_frame)"/>
     <param name="shutdown_on_disconnect" type="bool" value="$(arg shutdown_on_disconnect)"/>
-  </node>
+  </node> -->
 
   <!-- Load controller settings -->
   <rosparam file="$(find ur_modern_driver)/config/ur10_controllers.yaml" command="load"/>
@@ -45,8 +46,10 @@
   <!-- load other controller --> 
   <node name="ros_control_controller_manager" pkg="controller_manager" type="controller_manager" respawn="false"
     output="screen" args="load pos_based_pos_traj_controller" /> 
+    <!-- output="screen" args="load vel_based_pos_traj_controller" />  -->
+    <!-- output="screen" args="load pos_based_pos_traj_controller vel_based_pos_traj_controller force_torque_sensor_controller" />  -->
 
   <!-- Convert joint states to /tf tranforms -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/> -->
 
 </launch>
